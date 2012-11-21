@@ -27,6 +27,9 @@ AC_PROG_LIBTOOL
 # Build with -Wall.
 CFLAGS="$CFLAGS -Wall"
 
+AC_ARG_ENABLE(thread,
+              [  --enable-thread      Enable __thread usage in code.],, enable_thread="auto")
+
 # Check the host operating system type: posix or win32.
 AC_MSG_CHECKING([host operating system type])
 AC_COMPILE_IFELSE([AC_LANG_SOURCE(
@@ -52,6 +55,10 @@ then
 
 # Check for __thread.
 AC_MSG_CHECKING([for working __thread])
+if test $enable_thread = no
+then
+AC_MSG_RESULT([no])
+else
 case $host_os-$host_cpu in
 aix*)
 	#
@@ -76,15 +83,23 @@ solaris*-sparc)
 	#
 	AC_MSG_RESULT([no])
 	;;
+solaris*-i386)
+  AC_MSG_RESULT([no])
+  ;;
 *)
-	_AC_COMPILE_IFELSE([AC_LANG_SOURCE(static __thread int p = 0;)],
-		[AC_DEFINE(HAVE_THREAD, 1, Define to 1 if compiler
-					   supports __thread.)
-		 AC_MSG_RESULT([yes])],
-		[AC_MSG_RESULT([no])])
+    _AC_LINK_IFELSE([AC_LANG_SOURCE(
+              static __thread int p = 0;
+              int main()
+              {
+                return p;
+              }
+      )],
+      [AC_DEFINE(HAVE_THREAD, 1, Define to 1 if compiler supports __thread.)
+		   AC_MSG_RESULT([yes])],
+      [AC_MSG_RESULT([no])])
 	;;
 esac
-
+fi
 # OS-specific preprocessor defines.
 case $host_os in
 hpux*)

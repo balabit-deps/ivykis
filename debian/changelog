@@ -1,0 +1,15 @@
+ivykis (0.36) syslogng50dbg; urgency=low
+
+  * New upstream version.
+
+ -- BalaBit Development Team <devel@balabit.hu>  Wed, 21 Nov 2012 9:45:30 +0200
+
+ivykis (0.20) syslogng33dbg; urgency=low
+
+  * New upstream version.
+
+ -- BalaBit Development Team <devel@balabit.hu>  Sat, 09 Apr 2011 01:03:30 +0200
+
+Local variables:
+mode: debian-changelog
+End:
