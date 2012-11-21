@@ -11,6 +11,7 @@ case "$cmd" in
     ;;
   bootstrap)
     sh ./autogen.sh
+    find -name libtool -o -name ltmain.sh | xargs sed -i -e "s,'file format pe-i386.*\?','file format \(pei\*-i386\(\.\*architecture: i386\)\?|pe-arm-wince|pe-x86-64\)'," -e 's,cmd \/\/c,,'
     ;;
   configure)
     CFLAGS="-g -O2" LDFLAGS="-g" ./configure $@
