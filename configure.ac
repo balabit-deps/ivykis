@@ -381,8 +381,10 @@ else
 
 # Build a libivykis DLL.
 AC_LIBTOOL_WIN32_DLL
+CFLAGS="$CFLAGS -DWINVER=0x0505 -D_FILE_OFFSET_BITS=64"
 
 fi
+
 
 
 # Conditionals for OS type.
