@@ -30,6 +30,10 @@ CFLAGS="$CFLAGS -Wall"
 AC_ARG_ENABLE(thread,
               [  --enable-thread      Enable __thread usage in code.],, enable_thread="auto")
 
+AC_ARG_ENABLE(dev-poll,
+              [  --enable-dev-poll     Enable dev_poll poll method in code.],, enable_dev_poll="auto")
+
+
 # Check the host operating system type: posix or win32.
 AC_MSG_CHECKING([host operating system type])
 AC_COMPILE_IFELSE([AC_LANG_SOURCE(
@@ -392,7 +396,11 @@ AM_CONDITIONAL([HAVE_POSIX], [test $ac_cv_host_system = posix])
 AM_CONDITIONAL([HAVE_WIN32], [test $ac_cv_host_system = win32])
 
 # Conditionals for poll methods.
-AM_CONDITIONAL([HAVE_DEV_POLL], [test x$ac_cv_header_sys_devpoll_h = xyes])
+if test x$enable_dev_poll = xauto; then
+    enable_dev_poll=$ac_cv_header_sys_devpoll_h
+fi
+
+AM_CONDITIONAL([HAVE_DEV_POLL], [test x$enable_dev_poll = xyes])
 AM_CONDITIONAL([HAVE_EPOLL], [test x$ac_cv_func_epoll_create = xyes])
 AM_CONDITIONAL([HAVE_KQUEUE], [test x$ac_cv_func_kqueue = xyes])
 AM_CONDITIONAL([HAVE_PORT], [test x$ac_cv_func_port_create = xyes])

@@ -2,7 +2,7 @@
 
 STAMPDIR=tgz2build/stamps
 
-CONFIGURE_OPTS := --prefix $(ZBS_PREFIX) --enable-shared --includedir="\$${prefix}/include/ivykis" --disable-kqueue
+CONFIGURE_OPTS := --prefix $(ZBS_PREFIX) --enable-shared --includedir="\$${prefix}/include/ivykis"
 
 LDFLAGS+=-L$(PWD)/lib -L$(PWD)/lib/.libs
 ifeq (,$(CC))
@@ -13,6 +13,7 @@ ifneq (,$(findstring tru64,$(ZBS_DIST)))
 # need to use the gcc version 4.0.2 because the gcc-4.2 generated wrong binary which did not started thread correctly
 CC=gcc
 CPP=cpp
+CONFIGURE_OPTS+= --disable-devpoll
 endif
 
 ifneq (,$(findstring i386,$(ZBS_ARCH)))
