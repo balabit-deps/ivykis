@@ -194,10 +194,8 @@ void iv_handle_register(struct iv_handle *_h)
 	if (h->signal_handle == NULL)
 		iv_fatal("iv_handle_register: CreateEvent failed");
 
-	t = CreateThread(NULL, 0, iv_handle_poll_thread, (void *)h, 0, NULL);
-	if (t == NULL)
-		iv_fatal("iv_handle_register: CreateThread failed");
-	CloseHandle(t);
+	if (!st->quit && h->handler != NULL)
+		iv_handle_start_poll_thread(h);
 
 	st->numobjs++;
 }
@@ -213,7 +211,8 @@ void iv_handle_unregister(struct iv_handle *_h)
 	}
 	iv_list_del_init(&h->list);
 
-	iv_handle_stop_poll_thread(st, h);
+	if (!st->quit && h->handler != NULL)
+		iv_handle_stop_poll_thread(st, h);
 
 	if (!iv_list_empty(&h->list_active)) {
 		EnterCriticalSection(&st->active_handle_list_lock);
@@ -254,11 +253,14 @@ void iv_handle_set_handler(struct iv_handle *_h, void (*handler)(void *))
 
 	EnterCriticalSection(&st->active_handle_list_lock);
 
-	if (!iv_list_empty(&h->list_active)) {
-		if (h->handler == NULL && handler != NULL)
-			iv_handle_move_to_list(h, &st->active_with_handler);
-		else if (h->handler != NULL && handler == NULL)
-			iv_handle_move_to_list(h, &st->active_without_handler);
+	if (old_handler == NULL && handler != NULL) {
+		iv_handle_move_to_list(st, h, &st->active_with_handler);
+		if (!st->quit)
+			iv_handle_start_poll_thread(h);
+	} else if (old_handler != NULL && handler == NULL) {
+		if (!st->quit)
+			iv_handle_stop_poll_thread(st, h);
+		iv_handle_move_to_list(st, h, &st->active_without_handler);
 	}
 
 	h->handler = handler;
