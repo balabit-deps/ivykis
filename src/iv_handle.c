@@ -48,13 +48,16 @@ iv_handle_stop_poll_thread(struct iv_state *st, struct iv_handle_ *h)
 	SetEvent(h->signal_handle);
 
 	do {
-		ret = WaitForSingleObjectEx(st->thread_stop, INFINITE, TRUE);
+		ret = WaitForSingleObjectEx(h->thr_handle, INFINITE, TRUE);
 	} while (ret == WAIT_IO_COMPLETION);
 
 	if (ret != WAIT_OBJECT_0) {
 		iv_fatal("iv_handle_stop_poll_thread: "
 			 "WaitForSingleObjectEx fail");
 	}
+
+	CloseHandle(h->thr_handle);
+	h->thr_handle = INVALID_HANDLE_VALUE;
 }
 
 void iv_handle_deinit(struct iv_state *st)
@@ -170,8 +173,6 @@ static DWORD WINAPI iv_handle_poll_thread(void *_h)
 	}
 	LeaveCriticalSection(&st->active_handle_list_lock);
 
-	SetEvent(st->thread_stop);
-
 	return 0;
 }
 
@@ -194,8 +195,10 @@ void iv_handle_register(struct iv_handle *_h)
 	if (h->signal_handle == NULL)
 		iv_fatal("iv_handle_register: CreateEvent failed");
 
-	if (!st->quit && h->handler != NULL)
-		iv_handle_start_poll_thread(h);
+	h->thr_handle = CreateThread(NULL, 0, iv_handle_poll_thread,
+				     (void *)h, 0, NULL);
+	if (h->thr_handle == NULL)
+		iv_fatal("iv_handle_register: CreateThread failed");
 
 	st->numobjs++;
 }
@@ -211,8 +214,7 @@ void iv_handle_unregister(struct iv_handle *_h)
 	}
 	iv_list_del_init(&h->list);
 
-	if (!st->quit && h->handler != NULL)
-		iv_handle_stop_poll_thread(st, h);
+	iv_handle_stop_poll_thread(st, h);
 
 	if (!iv_list_empty(&h->list_active)) {
 		EnterCriticalSection(&st->active_handle_list_lock);
@@ -253,14 +255,11 @@ void iv_handle_set_handler(struct iv_handle *_h, void (*handler)(void *))
 
 	EnterCriticalSection(&st->active_handle_list_lock);
 
-	if (old_handler == NULL && handler != NULL) {
-		iv_handle_move_to_list(st, h, &st->active_with_handler);
-		if (!st->quit)
-			iv_handle_start_poll_thread(h);
-	} else if (old_handler != NULL && handler == NULL) {
-		if (!st->quit)
-			iv_handle_stop_poll_thread(st, h);
-		iv_handle_move_to_list(st, h, &st->active_without_handler);
+	if (!iv_list_empty(&h->list_active)) {
+		if (h->handler == NULL && handler != NULL)
+			iv_handle_move_to_list(h, &st->active_with_handler);
+		else if (h->handler != NULL && handler == NULL)
+			iv_handle_move_to_list(h, &st->active_without_handler);
 	}
 
 	h->handler = handler;
