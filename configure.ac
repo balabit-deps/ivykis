@@ -240,7 +240,9 @@ fi
 
 # Checks for header files.
 AC_CHECK_HEADERS([process.h])
-AC_CHECK_HEADERS([sys/devpoll.h])
+if test x$enable_dev_poll = xauto -o x$enable_dev_poll = xyes; then
+  AC_CHECK_HEADERS([sys/devpoll.h])
+fi
 AC_CHECK_HEADERS([sys/eventfd.h])
 AC_CHECK_HEADERS([sys/syscall.h])
 # Older FreeBSDs (6.1) don't include sys/ucontext.h in sys/thr.h.
