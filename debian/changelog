@@ -1,3 +1,9 @@
+ivykis (0.36.syslogng50.1) syslogngdeps50; urgency=low
+
+  * version fixes : get-version removed from balabit-{unix|vs}-build
+
+ -- BalaBit Development Team <devel@balabit.hu>  Thu, 12 Sep 2013 12:22:37 +0200
+
 ivykis (0.36) syslogngdeps50; urgency=low
 
   * release for syslog-ng-5.0
