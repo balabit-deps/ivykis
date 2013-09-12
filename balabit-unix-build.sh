@@ -3,9 +3,6 @@
 cmd=$1
 shift
 case "$cmd" in
-  get-version)
-    echo 0.36-sng50ref1
-    ;;
   build-exclude-list|dist-exclude-list|prepare-dist)
     echo "out autom4te.cache"
     ;;
