@@ -1,3 +1,9 @@
+ivykis (0.36.syslogng50.2) syslogngdeps50; urgency=low
+
+  * enable-epoll option implemented
+
+ -- jviktor <jviktor@balabit.hu>  Wed, 18 Sep 2013 10:32:50 +0200
+
 ivykis (0.36.syslogng50.1) syslogngdeps50; urgency=low
 
   * version fixes : get-version removed from balabit-{unix|vs}-build
