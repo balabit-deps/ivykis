@@ -33,6 +33,9 @@ AC_ARG_ENABLE(thread,
 AC_ARG_ENABLE(dev-poll,
               [  --enable-dev-poll     Enable dev_poll poll method in code.],, enable_dev_poll="auto")
 
+AC_ARG_ENABLE(epoll,
+              [ --enable-epoll      Enable epoll poll method in code.],, enable_epoll="auto")
+
 
 # Check the host operating system type: posix or win32.
 AC_MSG_CHECKING([host operating system type])
@@ -318,8 +321,10 @@ AC_SEARCH_LIBS([socket], [socket])
 AC_SEARCH_LIBS([thr_self], [thread])
 
 # Checks for library functions.
-AC_CHECK_FUNCS([epoll_create])
-AC_CHECK_FUNCS([epoll_create1])
+if test x$enable_epoll = xauto -o x$enable_epoll = xyes; then
+  AC_CHECK_FUNCS([epoll_create])
+  AC_CHECK_FUNCS([epoll_create1])
+fi
 AC_CHECK_FUNCS([eventfd])
 AC_CHECK_FUNCS([gettid])
 AC_CHECK_FUNCS([inotify_init])
