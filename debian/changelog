@@ -1,3 +1,9 @@
+ivykis (0.36.syslogng50.3) syslogngdeps50; urgency=low
+
+  * spin_lock_sigmask fixed
+
+ -- Laszlo Budai <lbudai@balabit.hu>  Tue, 24 Sep 2013 10:40:10 +0200
+
 ivykis (0.36.syslogng50.2) syslogngdeps50; urgency=low
 
   * enable-epoll option implemented
