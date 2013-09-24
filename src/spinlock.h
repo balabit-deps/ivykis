@@ -75,8 +75,9 @@ static inline void spin_unlock(spinlock_t *lock)
 
 static inline void spin_lock_sigmask(spinlock_t *lock, sigset_t *mask)
 {
-	sigfillset(mask);
-	pthread_sigmask(SIG_BLOCK, mask, mask);
+	sigset_t blocked;
+	sigfillset(&blocked);
+	pthread_sigmask(SIG_BLOCK, &blocked, mask);
 
 	spin_lock(lock);
 }
