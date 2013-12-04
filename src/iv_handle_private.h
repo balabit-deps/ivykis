@@ -33,4 +33,5 @@ struct iv_handle_ {
 	struct iv_list_head	list_active;
 	struct iv_state		*st;
 	HANDLE			signal_handle;
+	HANDLE			thr_handle;
 };
