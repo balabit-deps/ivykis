@@ -1,3 +1,9 @@
+ivykis (0.36.syslogng52.1) syslogng52; urgency=low
+
+  * released for syslog-ng-5.2
+
+ -- jviktor <jviktor@devel-57>  Thu, 05 Jun 2014 14:04:36 +0200
+
 ivykis (0.36.syslogng51.1) syslogngdeps51; urgency=low
 
   * released for syslog-ng-5.1
