@@ -1,3 +1,9 @@
+ivykis (0.36.syslogng53.1) syslogng53; urgency=low
+
+  * release for syslog-ng-5.3
+
+ -- Tusa Viktor <tusa@tusa.balabit>  Tue, 21 Oct 2014 13:18:44 +0200
+
 ivykis (0.36.syslogng52.1) syslogng52; urgency=low
 
   * released for syslog-ng-5.2
