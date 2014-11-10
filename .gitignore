@@ -43,3 +43,9 @@ Makefile
 *.la
 *.a
 *.so
+
+#smake
+b
+smake/*.pyc
+smake.pyc
+test-driver
