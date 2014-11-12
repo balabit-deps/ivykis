@@ -45,7 +45,7 @@ Makefile
 *.so
 
 #smake
-b
-smake/*.pyc
-smake.pyc
+sbuild/build
+sbuild/*.pyc
+sbuild.py*
 test-driver
