@@ -1,3 +1,9 @@
+ivykis (0.36.syslogng53.2) syslogng53; urgency=low
+
+  * release for syslog-ng-5.3.2
+
+ -- jviktor <jviktor@balabit.com>  Wed, 03 Dec 2014 15:27:41 +0100
+
 ivykis (0.36.syslogng53.1) syslogng53; urgency=low
 
   * release for syslog-ng-5.3
