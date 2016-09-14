@@ -45,7 +45,7 @@ Makefile
 *.so
 
 #smake
-sbuild/build
-sbuild/*.pyc
+sbuild/*
+!sbuild/config.yml
 sbuild.py*
 test-driver
