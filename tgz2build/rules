@@ -51,7 +51,7 @@ $(STAMPDIR)/stamp-setup:
 
 configure: $(STAMPDIR)/stamp-configure
 $(STAMPDIR)/stamp-configure:
-	LDFLAGS="$(LDFLAGS) -g -liconv" CFLAGS="$(CFLAGS) -g -O2" CONFIG_SHELL=$(SHELL) $(SHELL) ./configure $(CONFIGURE_OPTS)
+	LDFLAGS='$(LDFLAGS) -Wl,-z,origin,-rpath,\$$$$ORIGIN/../lib -g -liconv' CFLAGS="$(CFLAGS) -g -O2" CONFIG_SHELL=$(SHELL) $(SHELL) ./configure $(CONFIGURE_OPTS)
 	touch $@
 
 build: $(STAMPDIR)/stamp-build
