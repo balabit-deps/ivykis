@@ -1,6 +1,7 @@
 name: ivykis
 builder:
   name: AutotoolsBuilder
+  flags: "relative-linking"
 platforms:
   - aix-6.1/powerpc
   - windows-2012/amd64
