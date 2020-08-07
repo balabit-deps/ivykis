@@ -1,3 +1,9 @@
+ivykis (0.36-1.syslogng70.1) syslogng70; urgency=low
+
+  * added $ORIGIN/../lib to RPATH
+
+ -- Attila Szakacs <attila.szakacs@quest.com>  Fri, 07 Aug 2020 08:34:56 +0200
+
 ivykis (0.36.syslogng53.2) syslogng53; urgency=low
 
   * release for syslog-ng-5.3.2
