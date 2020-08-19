@@ -1,3 +1,9 @@
+ivykis (0.36-2.syslogng70.1) syslogng70; urgency=low
+
+  * re-releasing with the new glib. Old glib caused pkg-config to fail
+
+ -- Antal Nemes <antal.nemes@quest.com>  Wed, 19 Aug 2020 11:49:28 +0200
+
 ivykis (0.36-1.syslogng70.1) syslogng70; urgency=low
 
   * added $ORIGIN/../lib to RPATH
