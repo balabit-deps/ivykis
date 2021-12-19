@@ -1,5 +1,0 @@
-opt/syslog-ng/include/ivykis/*
-opt/syslog-ng/lib/*.dylib
-opt/syslog-ng/lib/pkgconfig/ivykis.pc
-opt/syslog-ng/lib/libivykis.a
-opt/syslog-ng/lib/libivykis.la
