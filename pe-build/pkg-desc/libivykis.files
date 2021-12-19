@@ -1,0 +1,3 @@
+opt/syslog-ng/lib/libivykis.s[l,o]*
+opt/syslog-ng/lib/*.dylib
+opt/syslog-ng/lib/libivykis.a
