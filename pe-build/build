@@ -1,0 +1,23 @@
+source="ivykis"
+version=0.36-pe-1
+dependencies=(
+  'libiconv' 'libiconv-dev'
+)
+
+bootstrap() {
+  ./autogen.sh
+}
+
+build() {
+  cd "${build_dir}"
+  ${src_dir}/configure --prefix="${prefix}" --includedir="${prefix}/include/ivykis" --enable-shared
+  make
+}
+
+check() {
+  make -C "${build_dir}" check
+}
+
+install() {
+  make -C "${build_dir}" DESTDIR="${dest_dir}" install
+}
