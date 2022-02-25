@@ -10,7 +10,7 @@ bootstrap() {
 
 build() {
   cd "${build_dir}"
-  ${src_dir}/configure --prefix="${prefix}" --includedir="${prefix}/include/ivykis" --enable-shared
+  ${src_dir}/configure --prefix="${prefix}" --includedir='${prefix}/include/ivykis' --enable-shared
   make
 }
 
